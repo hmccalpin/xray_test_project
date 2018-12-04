@@ -12,14 +12,24 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
 
-def get_rand_img():
+def pull_rand_img():
     #pull random image from file of sample images
     rand_img = random.choice(os.listdir('/Users/haleymccalpin/Desktop/XRayProject/sample_images'))                       
     return(rand_img)
  
-    
-    #get_diagnosis(rand_img)
-    get_diagnosis(rand_img)
+def get_dx():
+    #grabs rand_img from previous task
+    current_rand_img = context['task_instance'].xcom_pull(task_ids='pull_rand_img')['rand_img']
+    #open sample_labels.csv and find random image diagnosis
+    with open('/Users/haleymccalpin/Desktop/XRayProject/sample_labels.csv') as csvfile:
+        sample_labels = csv.reader(csvfile)
+         
+        for row in sample_labels: 
+            if row[0] == image_ID:                
+                #print image ID, visual image, and corresponding diagnosis
+                x_ray = Image.open('/Users/haleymccalpin/Desktop/XRayProject/sample_images/{}'.format(image_ID))
+                print('image ID:', image_ID, '\ndiagnosis:', row[1], '\nimage:', plt.imshow(x_ray))    
+ 
 
 
 default_args = {
@@ -35,12 +45,9 @@ with DAG('airflow_tutorial_v01',
          schedule_interval='0/5 * * * *',         #runs every 5 min
          ) as dag:
 
-    print_hello = BashOperator(task_id='print_hello',
-                               bash_command='echo "hello"')
-    sleep = BashOperator(task_id='sleep',
-                         bash_command='sleep 5')
-    print_world = PythonOperator(task_id='print_world',
-                                 python_callable=print_world)
+    pull_rand_img = PythonOperator(task_id='pull_rand_img',
+                                   python_callable=pull_rand_img)
+    get_dx = PythonOperator(task_id='get_dx',
+                            python_callable=get_dx)
 
-
-print_hello >> sleep >> print_world
+pull_rand_img >> get_dx
