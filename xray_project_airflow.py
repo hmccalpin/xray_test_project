@@ -19,7 +19,7 @@ def pull_rand_img():
  
 def get_dx(**context):
     #grabs rand_img from previous task
-    current_rand_img = context['task_instance'].xcom_pull(task_ids='pull_rand_img')['rand_img']
+    current_rand_img = context['task_instance'].xcom_pull(task_ids='pull_rand_img')
     #open sample_labels.csv and find random image diagnosis
     with open('/Users/haleymccalpin/Desktop/XRayProject/sample_labels.csv') as csvfile:
         sample_labels = csv.reader(csvfile)
