@@ -17,7 +17,7 @@ def pull_rand_img():
     rand_img = random.choice(os.listdir('/Users/haleymccalpin/Desktop/XRayProject/sample_images'))                       
     return(rand_img)
  
-def get_dx():
+def get_dx(**context):
     #grabs rand_img from previous task
     current_rand_img = context['task_instance'].xcom_pull(task_ids='pull_rand_img')['rand_img']
     #open sample_labels.csv and find random image diagnosis
@@ -48,6 +48,7 @@ with DAG('xray_project_airflow_v01',
     pull_rand_img = PythonOperator(task_id='pull_rand_img',
                                    python_callable=pull_rand_img)
     get_dx = PythonOperator(task_id='get_dx',
-                            python_callable=get_dx)
+                            python_callable=get_dx
+                            provide_context = True)
 
 get_dx >> pull_rand_img
