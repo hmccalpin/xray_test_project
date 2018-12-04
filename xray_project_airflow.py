@@ -40,7 +40,7 @@ default_args = {
 }
 
 
-with DAG('airflow_tutorial_v01',
+with DAG('xray_project_airflow_v01',
          default_args=default_args,
          schedule_interval='0/5 * * * *',         #runs every 5 min
          ) as dag:
