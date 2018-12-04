@@ -48,7 +48,7 @@ with DAG('xray_project_airflow_v01',
     pull_rand_img = PythonOperator(task_id='pull_rand_img',
                                    python_callable=pull_rand_img)
     get_dx = PythonOperator(task_id='get_dx',
-                            python_callable=get_dx
+                            python_callable=get_dx,
                             provide_context = True)
 
 get_dx >> pull_rand_img
