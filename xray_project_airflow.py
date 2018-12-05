@@ -83,6 +83,9 @@ with DAG('xray_project_airflow_v01',
     get_dx = PythonOperator(task_id='get_dx',
                             python_callable=get_dx,
                             provide_context = True)
+    
+    resize = PythonOperator(task_id='resize',
+                            python_callable=resize)
 
 with DAG('xray_project_airflow_v02',
          default_args=default_args,
