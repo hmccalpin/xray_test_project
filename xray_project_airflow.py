@@ -28,7 +28,7 @@ def get_dx(**context):
             if row[0] == current_rand_img_ID:                
                 #print image ID, visual image, and corresponding diagnosis
                 x_ray = Image.open('/Users/haleymccalpin/Desktop/XRayProject/sample_images/{}'.format(current_rand_img_ID))
-                print('image ID:', current_rand_img_ID, '\ndiagnosis:', row[1], '\nimage:', plt.imshow(x_ray))
+                return('image ID:', current_rand_img_ID, '\ndiagnosis:', row[1], '\nimage:', plt.imshow(x_ray))
                 return(plt.imshow(x_ray))
 
         
