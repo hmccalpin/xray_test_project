@@ -51,7 +51,7 @@ def resize():
 def clear_resized_folder():
     #sets path to resized folder and directory of images in resized folder for future looping purposes
     resized_path = "/Users/haleymccalpin/Desktop/XRayProject/sample_images/resized/"
-    resized_dirs = os.listdir(path)
+    resized_dirs = os.listdir(resized_path)
     
     #create counter to keep track of # images removed from resized folder
     removed_counter = 0
@@ -62,7 +62,7 @@ def clear_resized_folder():
         removed_counter += 1
     
     #prints summary statement to dag log
-    logging.info("Removed {} x-ray images from resized folder".format(resized_counter))
+    logging.info("Removed {} x-ray images from resized folder".format(removed_counter))
 
 default_args = {
     'owner': 'me',
