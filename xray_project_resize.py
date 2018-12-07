@@ -82,7 +82,7 @@ with DAG('xray_project_airflow_v02',
                             python_callable=resize)
     
     wait_for_resize = ExternalTaskSensor(task_id = 'wait_for_resize',
-                                         external_dag_id='xray_project_airflow_v02'
+                                         external_dag_id='xray_project_airflow_v02',
                                          external_task_id='resize',
                                         )
     
