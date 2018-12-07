@@ -90,4 +90,4 @@ with DAG('xray_project_airflow_v02',
                                           python_callable=clear_resized_folder)
     
 
-clear_resized_folder >> resize
+clear_resized_folder >> wait_for_resize >> resize
