@@ -48,7 +48,7 @@ def resize():
     #prints summary statement to dag log
     logging.info("Resized {} x-ray images".format(resized_counter))
 
-def clear_resized folder():
+def clear_resized_folder():
     #sets path to resized folder and directory of images in resized folder for future looping purposes
     resized_path = "/Users/haleymccalpin/Desktop/XRayProject/sample_images/resized/"
     resized_dirs = os.listdir(path)
