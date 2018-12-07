@@ -5,6 +5,7 @@ import logging
 
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.sensors import ExternalTaskSensor
 
 
 def resize():
