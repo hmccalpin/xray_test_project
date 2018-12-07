@@ -5,7 +5,7 @@ import logging
 
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.sensors import ExternalTaskSensor
+#from airflow.operators.sensors import ExternalTaskSensor
 
 
 def resize():
@@ -88,7 +88,8 @@ with DAG('xray_project_airflow_v02',
                                         )'''
     
     clear_resized_folder = PythonOperator(task_id='clear_resized_folder',
-                                          python_callable=clear_resized_folder)
+                                          python_callable=clear_resized_folder,
+                                          trigger_rule='all_done')
     
 
-clear_resized_folder >>  resize
+clear_resized_folder >> resize
