@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cv2
 import csv
+import logging
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
@@ -46,6 +47,9 @@ def resize():
     if '.DS_Store' in dirs:
         dirs.remove('.DS_Store')
     
+    #create counter to keep track of # of images resized
+    resized_counter = 0
+    
     #loop through all image files in sample_images folder
     for item in dirs:
         
@@ -64,6 +68,23 @@ def resize():
             
             #saves resized image .png into resized/ folder 
             imResize.save(resized_path + resized_imageID +' resized.png', 'PNG', quality=90)
+            
+            resized_counter += 1
+            
+    #prints summary statement to dag log
+    logging.info("Resized {} x-ray images".format(resized_counter))
+
+def clear_resized folder():
+    #sets path to resized folder and directory of images in resized folder for future looping purposes
+    resized_path = "/Users/haleymccalpin/Desktop/XRayProject/sample_images/resized/"
+    resized_dirs = os.listdir(path)
+    
+    #loops through all images in resized folder and removes one by one 
+    for item in resized_dirs:
+        os.remove(resized_path+item)
+    
+    #prints summary statement to dag log
+    logging.info("Removed {} x-ray images from resized folder".format(resized_counter))
 
 default_args = {
     'owner': 'me',
@@ -83,17 +104,19 @@ with DAG('xray_project_airflow_v01',
     get_dx = PythonOperator(task_id='get_dx',
                             python_callable=get_dx,
                             provide_context = True)
+
+with DAG('xray_project_airflow_v02',
+         default_args=default_args,
+         schedule_interval='0 * * * *',         #runs every hour on the hour
+        ) as dag:
     
     resize = PythonOperator(task_id='resize',
                             python_callable=resize)
     
-
-'''with DAG('xray_project_airflow_v02',
-         default_args=default_args,
-         schedule_interval='0/5 * * * *',
-        ) as dag:
-'''
-    
+    clear_resized_folder = PythonOperator(task_id='clear_resized_folder',
+                                          python_callable=clear_resized_folder)
     
 
-get_dx >> pull_rand_img >> resize
+get_dx >> pull_rand_img
+
+clear_resized_folder >> resize
