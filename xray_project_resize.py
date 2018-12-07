@@ -74,12 +74,18 @@ default_args = {
 with DAG('xray_project_airflow_v02',
          default_args=default_args,
          schedule_interval='0 * * * *',         #runs every hour on the hour
+         max_active_runs = 1
         ) as dag:
     
     resize = PythonOperator(task_id='resize',
                             python_callable=resize)
     
+    wait_for_resize = ExternalTaskSensor(task_id = 'wait_for_resize',
+                                         external_dag_id='resize',
+                                        )
+    
     clear_resized_folder = PythonOperator(task_id='clear_resized_folder',
                                           python_callable=clear_resized_folder)
+    
 
-clear_resized_folder >> resize
+clear_resized_folder >> wait_for_resize >> resize
