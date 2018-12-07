@@ -81,12 +81,12 @@ with DAG('xray_project_airflow_v02',
     resize = PythonOperator(task_id='resize',
                             python_callable=resize)
     
-    wait_for_resize = ExternalTaskSensor(task_id = 'wait_for_resize',
+    '''wait_for_resize = ExternalTaskSensor(task_id = 'wait_for_resize',
                                          external_task_id='resize',
-                                        )
+                                        )'''
     
     clear_resized_folder = PythonOperator(task_id='clear_resized_folder',
                                           python_callable=clear_resized_folder)
     
 
-clear_resized_folder >> wait_for_resize >> resize
+clear_resized_folder >> resize
