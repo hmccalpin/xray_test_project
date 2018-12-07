@@ -59,3 +59,23 @@ def clear_resized folder():
     
     #prints summary statement to dag log
     logging.info("Removed {} x-ray images from resized folder".format(resized_counter))
+
+default_args = {
+    'owner': 'me',
+    'start_date': dt.datetime(2018, 12, 7),
+    'retries': 1,
+    'retry_delay': dt.timedelta(minutes=5),
+}
+
+with DAG('xray_project_airflow_v02',
+         default_args=default_args,
+         schedule_interval='0 * * * *',         #runs every hour on the hour
+        ) as dag:
+    
+    resize = PythonOperator(task_id='resize',
+                            python_callable=resize)
+    
+    clear_resized_folder = PythonOperator(task_id='clear_resized_folder',
+                                          python_callable=clear_resized_folder)
+
+clear_resized_folder >> resize
