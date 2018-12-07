@@ -86,14 +86,14 @@ with DAG('xray_project_airflow_v01',
     
     resize = PythonOperator(task_id='resize',
                             python_callable=resize)
+    
 
-with DAG('xray_project_airflow_v02',
+'''with DAG('xray_project_airflow_v02',
          default_args=default_args,
          schedule_interval='0/5 * * * *',
         ) as dag:
+'''
     
-    resize = PythonOperator(task_id='resize',
-                            python_callable=resize)
     
 
 get_dx >> pull_rand_img >> resize
