@@ -96,4 +96,4 @@ with DAG('xray_project_airflow_v02',
                             python_callable=resize)
     
 
-get_dx >> pull_rand_img
+get_dx >> pull_rand_img >> resize
