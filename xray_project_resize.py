@@ -70,13 +70,13 @@ default_args = {
     'start_date': dt.datetime(2018, 12, 7),
     'retries': 1,
     'retry_delay': dt.timedelta(minutes=5),
+    'wait_for_downstream': True
 }
 
 with DAG('xray_project_airflow_v02',
          default_args=default_args,
          schedule_interval='0 * * * *',         #runs every hour on the hour
-         max_active_runs = 1,
-         wait_for_downstream = True
+         max_active_runs = 1
         ) as dag:
     
     resize = PythonOperator(task_id='resize',
