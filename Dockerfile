@@ -1,4 +1,5 @@
-FROM python:3.6        #alpine = stripped down version of image, installs only minimal amt of packages
+#alpine = stripped down version of image, installs only minimal amt of packages
+FROM python:alpine        
  
 ADD xray_project_resize.py
 
