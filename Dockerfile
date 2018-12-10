@@ -1,8 +1,8 @@
 #alpine = stripped down version of image, installs only minimal amt of packages
 FROM python:3        
  
-COPY . /xray_test_project_github
-WORKDIR /xray_test_project_github
+WORKDIR /app
+COPY . /app
 
 RUN pip install -r requirements.txt
 
