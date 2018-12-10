@@ -2,7 +2,7 @@
 FROM python:3        
  
 #moves application into  container image
-COPY ./app
+COPY . /app
 
 #set working directory
 WORKDIR /app
