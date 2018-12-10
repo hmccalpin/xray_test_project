@@ -94,4 +94,5 @@ with DAG('xray_project_airflow_v02',
                                         
     
 
-clear_resized_folder >> resize
+#clear_resized_folder >> resize
+resize.set_downstream(clear_resized_folder)
