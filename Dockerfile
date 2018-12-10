@@ -2,8 +2,12 @@
 FROM python:3        
  
 ADD xray_project_resize.py /
-#WORKDIR xray_test_project_github/
+WORKDIR xray_test_project_github/
 
-RUN pip install -r requirements.txt
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
 
 CMD ["python", "./xray_project_resize.py"]
