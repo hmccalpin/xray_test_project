@@ -70,7 +70,8 @@ default_args = {
     'start_date': dt.datetime(2018, 12, 7),
     'retries': 1,
     'retry_delay': dt.timedelta(minutes=5),
-    'wait_for_downstream': True
+    'wait_for_downstream': True,
+    'depends_on_past': True
 }
 
 with DAG('xray_project_airflow_v02',
@@ -89,8 +90,8 @@ with DAG('xray_project_airflow_v02',
     
     clear_resized_folder = PythonOperator(task_id='clear_resized_folder',
                                           python_callable=clear_resized_folder,
-                                          trigger_rule='all_success',
-                                          depend_on_past=True)
+                                          trigger_rule='all_success')
+                                        
     
 
 clear_resized_folder >> resize
