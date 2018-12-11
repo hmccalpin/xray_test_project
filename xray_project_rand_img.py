@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 
 import matplotlib.image as mpimg
-import cv2
 import csv
 import logging
 
@@ -16,20 +15,20 @@ from airflow.operators.python_operator import PythonOperator
 
 def pull_rand_img():
     #pull random image from file of sample images
-    rand_img = random.choice(os.listdir('/Users/haleymccalpin/Desktop/XRayProject/sample_images'))                       
+    rand_img = random.choice(os.listdir('/Users/hmccalpin/Desktop/Kaggle_Xray_Dataset/images'))                       
     return(rand_img)
  
 def get_dx(**context):
     #grabs rand_img from previous task
     current_rand_img_ID = context['task_instance'].xcom_pull(task_ids='pull_rand_img')
     #open sample_labels.csv and find random image diagnosis
-    with open('/Users/haleymccalpin/Desktop/XRayProject/sample_labels.csv') as csvfile:
+    with open('/Users/hmccalpin/Desktop/Kaggle_Xray_Dataset/sample_labels.csv') as csvfile:
         sample_labels = csv.reader(csvfile)
          
         for row in sample_labels: 
             if row[0] == current_rand_img_ID:                
                 #print image ID, visual image, and corresponding diagnosis
-                x_ray = Image.open('/Users/haleymccalpin/Desktop/XRayProject/sample_images/{}'.format(current_rand_img_ID))
+                x_ray = Image.open('/Users/hmccalpin/Desktop/Kaggle_Xray_Dataset/images/{}'.format(current_rand_img_ID))
                 return('image ID:', current_rand_img_ID, '\ndiagnosis:', row[1], '\nimage:', plt.imshow(x_ray))
                 return(plt.imshow(x_ray))
 
