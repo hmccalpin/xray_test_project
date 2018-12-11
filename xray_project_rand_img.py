@@ -53,5 +53,6 @@ with DAG('xray_project_airflow_v01',
                             provide_context = True)
 
 
-get_dx >> pull_rand_img
+
+pull_rand_img.set_downstream(get_dx)
 
