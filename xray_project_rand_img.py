@@ -3,7 +3,7 @@ import datetime as dt
 import os, random, sys
 from PIL import Image
 import matplotlib.pyplot as plt
-plt.use('TkAgg')
+
 
 import matplotlib.image as mpimg
 import cv2
