@@ -1,4 +1,5 @@
 import datetime as dt
+from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 
 default_args = {
