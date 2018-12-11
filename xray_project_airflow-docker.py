@@ -29,4 +29,5 @@ with DAG('xray_project_airflow-docker',
                                          dag=dag)
                                          
     
-    stop_resize_container >> run_resize_container >> build_resize_container
+
+build_resize_container >> run_resize_container >> stop_resize_container
