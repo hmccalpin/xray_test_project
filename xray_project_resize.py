@@ -10,7 +10,7 @@ from airflow.operators.python_operator import PythonOperator
 
 def resize():
     #storing list of image files in dirs variable
-    path = "/Users/haleymccalpin/Desktop/XRayProject/sample_images/"
+    path = "/Users/hmccalpin/Desktop/Kaggle_Xray_Dataset/images/"
     dirs = os.listdir(path)
     
     #creates path for resized image files
@@ -51,7 +51,7 @@ def resize():
 
 def clear_resized_folder():
     #sets path to resized folder and directory of images in resized folder for future looping purposes
-    resized_path = "/Users/haleymccalpin/Desktop/XRayProject/sample_images/resized/"
+    resized_path = "/Users/hmccalpin/Desktop/Kaggle_Xray_Dataset/images/resized/"
     resized_dirs = os.listdir(resized_path)
     
     #create counter to keep track of # images removed from resized folder
