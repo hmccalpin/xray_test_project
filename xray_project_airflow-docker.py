@@ -27,7 +27,5 @@ with DAG('xray_project_airflow-docker',
     stop_resize_container = BashOperator(task_id='stop_resize_container',
                                          bash_command='docker stop resize',
                                          dag=dag)
-                                         
-    
-
+                        
 build_resize_container >> run_resize_container >> stop_resize_container
