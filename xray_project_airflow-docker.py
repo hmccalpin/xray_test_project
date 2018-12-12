@@ -23,7 +23,6 @@ with DAG('xray_project_airflow-docker',
                                           
     run_resize_container = BashOperator(task_id='run_resize_container',
                                         bash_command='docker run resize',
-                                        trigger_rule='all_success',
                                         dag=dag)
     
     stop_resize_container = BashOperator(task_id='stop_resize_container',
