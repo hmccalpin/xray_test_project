@@ -14,6 +14,7 @@ default_args = {
 with DAG('xray_project_airflow-docker',
          default_args=default_args,
          schedule_interval='0/5 * * * *',         #runs every 5 min
+         max_active_runs = 1
          ) as dag:
 
     build_resize_container = BashOperator(task_id='build_resize_container',
@@ -22,10 +23,12 @@ with DAG('xray_project_airflow-docker',
                                           
     run_resize_container = BashOperator(task_id='run_resize_container',
                                         bash_command='docker run resize',
+                                        trigger_rule='all_success'
                                         dag=dag)
     
     stop_resize_container = BashOperator(task_id='stop_resize_container',
                                          bash_command='docker stop resize',
+                                         trigger_rule='all_success'
                                          dag=dag)
                         
 build_resize_container >> run_resize_container >> stop_resize_container
