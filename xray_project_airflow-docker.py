@@ -18,7 +18,7 @@ with DAG('xray_project_airflow-docker',
          ) as dag:
 
     build_resize_container = BashOperator(task_id='build_resize_container',
-                                          bash_command="cd Desktop/X-Ray-Resize && docker build -t resize .",
+                                          bash_command='echo "cd Desktop/X-Ray-Resize && docker build -t resize ."',
                                           dag=dag)
                                           
     run_resize_container = BashOperator(task_id='run_resize_container',
